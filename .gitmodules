@@ -1,0 +1,3 @@
+[submodule "src/mdm"]
+	path = src/mdm
+	url = https://github.com/miu200521358/motion-diffusion-model
