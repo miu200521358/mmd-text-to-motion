@@ -168,7 +168,7 @@ def execute(args):
                 caption = all_text[rep_i*argv.batch_size + sample_i]
                 length = all_lengths[rep_i*argv.batch_size + sample_i]
                 motion = all_motions[rep_i*argv.batch_size + sample_i].transpose(2, 0, 1)[:length]
-                save_file = 'sample{:02d}_rep{:02d}.mp4'.format(sample_i, rep_i)
+                save_file = 'sample{:02d}_rep{:02d}.gif'.format(sample_i, rep_i)
                 animation_save_path = os.path.join(out_path, save_file)
                 print(f'[({sample_i}) "{caption}" | Rep #{rep_i} | -> {save_file}]')
                 if argv.dataset == 'kit':
