@@ -573,7 +573,7 @@ VMD_CONNECTIONS = {
             "首",
         ),
         "invert": {
-            "before": MVector3D(),
+            "before": MVector3D(-30, 0, 0),
             "after": MVector3D(),
         },
         "threshold": 0.2,
