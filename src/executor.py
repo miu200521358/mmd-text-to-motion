@@ -62,7 +62,7 @@ if __name__ == "__main__":
     start = time.time()
 
     logger.info(
-        "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}",
+        "Text2Motion\n　テキスト: {text}\n　処理内容: {process}",
         text=args.text,
         process=args.process,
         decoration=MLogger.DECORATION_BOX,
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start
 
         logger.info(
-            "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}",
+            "Text2Motion終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}",
             text=args.text,
             process=args.process,
             output_dir=args.output_dir,
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         print(traceback.format_exc())
 
         logger.error(
-            "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}",
+            "Text2Motion失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}",
             text=args.text,
             process=args.process,
             elapsed_time=show_worked_time(elapsed_time),

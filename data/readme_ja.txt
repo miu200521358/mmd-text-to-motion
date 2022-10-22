@@ -24,7 +24,7 @@
 　・trace_model/trace_model.pmx　 … 生成元モデル（メッシュ入り）
 　・xxx　　　　　　　　　　　     … 生成結果フォルダ
 　　　・xxx.json　　　　　　　　  … JSONファイル
-　　　・xxx.mp4　　　　　　　　   … モーション動画
+　　　・xxx.avi　　　　　　　　   … モーション動画
 　　　・trace_noXXX.pmx　　　　　 … 生成元モデルと同じ骨格の棒人間モデル
 　　　・trace_noXXX_original.vmd　… 全打ちモーション
 　　　・trace_noXXX_thining.vmd　 … 間引き済みモーション

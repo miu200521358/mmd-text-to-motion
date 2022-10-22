@@ -18,8 +18,8 @@ msgstr ""
 
 msgid "Text2Motion開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
 msgstr "Start Text2Motion\n Processing target video file: {video_file}\n Processing content: {process}"
-msgid "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}"
-msgstr "MMD motion automatic generation tool\nText: {text}\nProcess content: {process}"
+msgid "Text2Motion\n　テキスト: {text}\n　処理内容: {process}"
+msgstr "Text2Motion\n Text: {text}\n Process content: {process}"
 
 msgid "text2motion開始"
 msgstr "start text2motion"
@@ -33,8 +33,8 @@ msgstr "Motion generation process started: {img_dir}"
 msgid "指定されたMixディレクトリが存在しません。\nMixが完了していない可能性があります。: {img_dir}"
 msgstr "The specified Mix directory does not exist.\nMix may not have completed: {img_dir}"
 
-msgid "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
-msgstr "MMD motion automatic generation tool failed\n　Text: {text}\nProcessing content: {process}\nProcessing time: {elapsed_time}"
+msgid "Text2Motion失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
+msgstr "Text2Motion failed\n Text: {text}\n Process content: {process}\n Processing time: {elapsed_time}"
 
 msgid "motion-diffusion-model 開始"
 msgstr "start motion-diffusion-model"
@@ -54,8 +54,8 @@ msgstr "[No.{pname}] motion-diffusion-model completed"
 msgid "motion-diffusion-model 完了: {output_dir}"
 msgstr "motion-diffusion-model done: {output_dir}"
 
-msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
-msgstr "MMD motion automatic generation tool finished\nText: {text}\nProcessing content: {process}\nGeneration result: {output_dir}\nProcessing time: {elapsed_time}"
+msgid "Text2Motion終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+msgstr "Text2Motion ended\n Text: {text}\n Process content: {process}\n Generated result: {output_dir}\n Processing time: {elapsed_time}"
 
 msgid "推定結果合成 処理開始: {output_dir}"
 msgstr "Estimated result synthesis process started: {output_dir}"
@@ -101,3 +101,6 @@ msgstr "Motion result saved: {motion_dir_path}"
 
 msgid "モーション結果保存完了: {personal_output_dir}"
 msgstr "Motion result saved: {personal_output_dir}"
+
+msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+msgstr "MMD motion automatic generation tool ended\n　Text: {text}\nProcessing content: {process}\nGeneration result: {output_dir}\nProcessing time: {elapsed_time}"

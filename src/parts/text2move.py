@@ -172,7 +172,7 @@ def execute(args):
                 decoration=MLogger.DECORATION_LINE,
             )
 
-            plot_3d_motion(os.path.join(personal_output_dir, f"{pname}.mp4"), skeleton, motion, title=argv.text_prompt, fps=fps)
+            plot_3d_motion(os.path.join(personal_output_dir, f"{pname}.avi"), skeleton, motion, title=argv.text_prompt, fps=fps)
 
             logger.info(
                 "【No.{pname}】motion-diffusion-model 完了",
@@ -231,7 +231,7 @@ def plot_3d_motion(save_path, kinematic_tree, joints, title, figsize=(3, 3), fps
     data[..., 0] -= data[:, 0:1, 0]
     data[..., 2] -= data[:, 0:1, 2]
 
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter_fourcc(*"I420")
     out = cv2.VideoWriter(
         save_path,
         fourcc,

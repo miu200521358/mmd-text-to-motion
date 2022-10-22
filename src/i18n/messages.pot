@@ -19,7 +19,7 @@ msgstr ""
 msgid "Text2Motion開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
 msgstr ""
 
-msgid "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}"
+msgid "Text2Motion\n　テキスト: {text}\n　処理内容: {process}"
 msgstr ""
 
 
@@ -39,7 +39,7 @@ msgid "指定されたMixディレクトリが存在しません。\nMixが完�
 msgstr ""
 
 
-msgid "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
+msgid "Text2Motion失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
 msgstr ""
 
 
@@ -67,7 +67,7 @@ msgid "motion-diffusion-model 完了: {output_dir}"
 msgstr ""
 
 
-msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+msgid "Text2Motion終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
 msgstr ""
 
 
@@ -128,5 +128,9 @@ msgstr ""
 
 
 msgid "モーション結果保存完了: {personal_output_dir}"
+msgstr ""
+
+
+msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
 msgstr ""
 
