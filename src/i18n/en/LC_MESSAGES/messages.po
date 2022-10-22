@@ -16,5 +16,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
-msgid "MMD自動トレース開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
-msgstr "MMD auto trace start\nProcessing target video file: {video_file}\nProcessing content: {process}"
+msgid "Text2Motion開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
+msgstr "Start Text2Motion\n Processing target video file: {video_file}\n Processing content: {process}"
+msgid "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}"
+msgstr "MMD motion automatic generation tool\nText: {text}\nProcess content: {process}"
+
+msgid "text2motion開始"
+msgstr "start text2motion"
+
+msgid "text2motion完了: {text}"
+msgstr "text2motion completed: {text}"
+
+msgid "モーション生成処理開始: {img_dir}"
+msgstr "Motion generation process started: {img_dir}"
+
+msgid "指定されたMixディレクトリが存在しません。\nMixが完了していない可能性があります。: {img_dir}"
+msgstr "The specified Mix directory does not exist.\nMix may not have completed: {img_dir}"
+
+msgid "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
+msgstr "MMD motion automatic generation tool failed\n　Text: {text}\nProcessing content: {process}\nProcessing time: {elapsed_time}"
+
+msgid "motion-diffusion-model 開始"
+msgstr "start motion-diffusion-model"
+
+msgid "【No.{pname}】motion-diffusion-model 実行"
+msgstr "[No.{pname}] motion-diffusion-model execution"
+
+msgid "【No.{pname}】motion-diffusion-model 動画出力"
+msgstr "[No.{pname}]motion-diffusion-model video output"
+
+msgid "motion-diffusion-model で予期せぬエラーが発生しました。"
+msgstr "Unexpected error in motion-diffusion-model."
+
+msgid "【No.{pname}】motion-diffusion-model 完了"
+msgstr "[No.{pname}] motion-diffusion-model completed"
+
+msgid "motion-diffusion-model 完了: {output_dir}"
+msgstr "motion-diffusion-model done: {output_dir}"
+
+msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+msgstr "MMD motion automatic generation tool finished\nText: {text}\nProcessing content: {process}\nGeneration result: {output_dir}\nProcessing time: {elapsed_time}"
+
+msgid "推定結果合成 処理開始: {output_dir}"
+msgstr "Estimated result synthesis process started: {output_dir}"
+
+msgid "【No.{pname}】推定結果合成 合成開始"
+msgstr "[No.{pname}] Estimation Result Synthesis Synthesis Start"
+
+msgid "【No.{pname}】推定結果合成 出力開始"
+msgstr "[No.{pname}] Synthesis of estimated results Start output"
+
+msgid "推定結果合成 処理終了: {output_dir}"
+msgstr "Estimated result synthesis processing finished: {output_dir}"
+
+msgid "【No.{pname}】モーション結果位置計算開始"
+msgstr "[No.{pname}] motion result position calculation start"
+
+msgid "モーション生成で予期せぬエラーが発生しました。"
+msgstr "Unexpected error in motion generation."
+
+msgid "【No.{pname}】モーション(回転)計算開始"
+msgstr "[No.{pname}] motion (rotation) calculation start"
+
+msgid "【No.{pname}】モーション(センター)計算開始"
+msgstr "[No.{pname}] motion (center) calculation start"
+
+msgid "【No.{pname}】モーション(IK)計算開始"
+msgstr "[No.{pname}] motion (IK) calculation start"
+
+msgid "【No.{pname}】モーション(IK固定)計算開始"
+msgstr "[No.{pname}] Motion (IK fixed) calculation start"
+
+msgid "【No.{pname}】モーション(回転)生成開始【{path}】"
+msgstr "[No.{pname}] motion (rotation) generation start [{path}]"
+
+msgid "【No.{pname}】モーション 間引き準備"
+msgstr "[No.{pname}] motion thinning preparation"
+
+msgid "【No.{pname}】モーション(間引き)生成開始【{path}】"
+msgstr "[No.{pname}] Motion (thinning) generation start [{path}]"
+
+msgid "モーション結果保存完了: {motion_dir_path}"
+msgstr "Motion result saved: {motion_dir_path}"
+
+msgid "モーション結果保存完了: {personal_output_dir}"
+msgstr "Motion result saved: {personal_output_dir}"

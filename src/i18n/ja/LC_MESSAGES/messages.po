@@ -16,6 +16,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
-msgid "MMD自動トレース開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
-msgstr "MMD自動トレース開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
+msgid "Text2Motion開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
+msgstr "Text2Motion開始\n　処理対象映像ファイル: {video_file}\n　処理内容: {process}"
+msgid "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}"
+msgstr "MMDモーション自動生成ツール\n　テキスト: {text}\n　処理内容: {process}"
 
+msgid "text2motion開始"
+msgstr "text2motion開始"
+
+msgid "text2motion完了: {text}"
+msgstr "text2motion完了: {text}"
+
+msgid "モーション生成処理開始: {img_dir}"
+msgstr "モーション生成処理開始: {img_dir}"
+
+msgid "指定されたMixディレクトリが存在しません。\nMixが完了していない可能性があります。: {img_dir}"
+msgstr "指定されたMixディレクトリが存在しません。\nMixが完了していない可能性があります。: {img_dir}"
+
+msgid "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
+msgstr "MMDモーション自動生成ツール失敗\n　テキスト: {text}\n　処理内容: {process}\n　処理時間: {elapsed_time}"
+
+msgid "motion-diffusion-model 開始"
+msgstr "motion-diffusion-model 開始"
+
+msgid "【No.{pname}】motion-diffusion-model 実行"
+msgstr "【No.{pname}】motion-diffusion-model 実行"
+
+msgid "【No.{pname}】motion-diffusion-model 動画出力"
+msgstr "【No.{pname}】motion-diffusion-model 動画出力"
+
+msgid "motion-diffusion-model で予期せぬエラーが発生しました。"
+msgstr "motion-diffusion-model で予期せぬエラーが発生しました。"
+
+msgid "【No.{pname}】motion-diffusion-model 完了"
+msgstr "【No.{pname}】motion-diffusion-model 完了"
+
+msgid "motion-diffusion-model 完了: {output_dir}"
+msgstr "motion-diffusion-model 完了: {output_dir}"
+
+msgid "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+msgstr "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}"
+
+msgid "推定結果合成 処理開始: {output_dir}"
+msgstr "推定結果合成 処理開始: {output_dir}"
+
+msgid "【No.{pname}】推定結果合成 合成開始"
+msgstr "【No.{pname}】推定結果合成 合成開始"
+
+msgid "【No.{pname}】推定結果合成 出力開始"
+msgstr "【No.{pname}】推定結果合成 出力開始"
+
+msgid "推定結果合成 処理終了: {output_dir}"
+msgstr "推定結果合成 処理終了: {output_dir}"
+
+msgid "【No.{pname}】モーション結果位置計算開始"
+msgstr "【No.{pname}】モーション結果位置計算開始"
+
+msgid "モーション生成で予期せぬエラーが発生しました。"
+msgstr "モーション生成で予期せぬエラーが発生しました。"
+
+msgid "【No.{pname}】モーション(回転)計算開始"
+msgstr "【No.{pname}】モーション(回転)計算開始"
+
+msgid "【No.{pname}】モーション(センター)計算開始"
+msgstr "【No.{pname}】モーション(センター)計算開始"
+
+msgid "【No.{pname}】モーション(IK)計算開始"
+msgstr "【No.{pname}】モーション(IK)計算開始"
+
+msgid "【No.{pname}】モーション(IK固定)計算開始"
+msgstr "【No.{pname}】モーション(IK固定)計算開始"
+
+msgid "【No.{pname}】モーション(回転)生成開始【{path}】"
+msgstr "【No.{pname}】モーション(回転)生成開始【{path}】"
+
+msgid "【No.{pname}】モーション 間引き準備"
+msgstr "【No.{pname}】モーション 間引き準備"
+
+msgid "【No.{pname}】モーション(間引き)生成開始【{path}】"
+msgstr "【No.{pname}】モーション(間引き)生成開始【{path}】"
+
+msgid "モーション結果保存完了: {motion_dir_path}"
+msgstr "モーション結果保存完了: {motion_dir_path}"
+
+msgid "モーション結果保存完了: {personal_output_dir}"
+msgstr "モーション結果保存完了: {personal_output_dir}"

@@ -26,6 +26,9 @@ def show_worked_time(elapsed_time):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str, dest="text", default="", help="text (English or Japanese)")
+    parser.add_argument("--seconds", type=float, dest="seconds", default=5.0, help="seconds")
+    parser.add_argument("--num_repetitions", type=int, dest="num_repetitions", default=3, help="num_repetitions")
+    parser.add_argument("--seed", type=int, dest="seed", default=3, help="seed")
     parser.add_argument(
         "--parent-dir",
         type=str,
@@ -66,9 +69,9 @@ if __name__ == "__main__":
     )
 
     try:
-        if "text2motion" in args.process:
+        if "text2move" in args.process:
             # 準備
-            from parts.text2motion import execute
+            from parts.text2move import execute
 
             result, args.output_dir = execute(args)
 
@@ -87,10 +90,10 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start
 
         logger.info(
-            "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {result_dir}\n　処理時間: {elapsed_time}",
+            "MMDモーション自動生成ツール終了\n　テキスト: {text}\n　処理内容: {process}\n　生成結果: {output_dir}\n　処理時間: {elapsed_time}",
             text=args.text,
             process=args.process,
-            result_dir=args.result_dir,
+            output_dir=args.output_dir,
             elapsed_time=show_worked_time(elapsed_time),
             decoration=MLogger.DECORATION_BOX,
         )
@@ -98,6 +101,7 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start
 
         import traceback
+
         print(traceback.format_exc())
 
         logger.error(

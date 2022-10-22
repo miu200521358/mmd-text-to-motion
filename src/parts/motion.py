@@ -39,29 +39,16 @@ def execute(args):
         )
         raise MApplicationException()
 
-    if not os.path.exists(os.path.join(args.output_dir, DirName.MIX.value)):
-        logger.error(
-            "指定されたMixディレクトリが存在しません。\nMixが完了していない可能性があります。: {img_dir}",
-            img_dir=os.path.join(args.output_dir, DirName.MIX.value),
-            decoration=MLogger.DECORATION_BOX,
-        )
-        raise MApplicationException()
-
     try:
-        output_dir_path = os.path.join(args.output_dir, DirName.MOTION.value)
-
-        if os.path.exists(output_dir_path):
-            os.rename(output_dir_path, f"{output_dir_path}_{datetime.fromtimestamp(os.stat(output_dir_path).st_ctime).strftime('%Y%m%d_%H%M%S')}")
-
-        os.makedirs(output_dir_path, exist_ok=True)
-
         # トレース用モデルを読み込む
         trace_model = PmxReader().read_by_filepath(args.trace_rot_model_config)
         # トレース調整用モデルを読み込む
         trace_check_model = PmxReader().read_by_filepath(args.trace_check_model_config)
 
-        for person_file_path in sorted(glob(os.path.join(args.output_dir, DirName.MIX.value, "*.json"))):
+        for person_file_path in sorted(glob(os.path.join(args.output_dir, DirName.PERSONAL.value, "**", "*.json"))):
             pname, _ = os.path.splitext(os.path.basename(person_file_path))
+
+            personal_output_dir = os.path.join(args.output_dir, DirName.PERSONAL.value, pname)
 
             logger.info(
                 "【No.{pname}】モーション結果位置計算開始",
@@ -70,7 +57,6 @@ def execute(args):
             )
 
             trace_abs_mov_motion = VmdMotion()
-            trace_2d_motion = VmdMotion()
 
             mix_data = {}
             with open(person_file_path, "r", encoding="utf-8") as f:
@@ -79,7 +65,7 @@ def execute(args):
             color = mix_data["color"]
 
             # 番号付きでPMXを出力
-            copy_trace_check_model_path = os.path.join(output_dir_path, f"trace_no{pname}.pmx")
+            copy_trace_check_model_path = os.path.join(personal_output_dir, f"trace_no{pname}.pmx")
             copy_trace_check_model: PmxModel = trace_check_model.copy()
             copy_trace_check_model.name = f"[{pname}]{copy_trace_check_model.name}"
             copy_trace_check_model.materials["ボーン材質"].diffuse_color.x = color[0]
@@ -96,7 +82,7 @@ def execute(args):
                 if iidx == 0:
                     start_fno = fno
 
-                for jname, joint in frames["body"].items():
+                for jname, joint in frames.items():
                     if jname not in PMX_CONNECTIONS:
                         continue
                     bf = VmdBoneFrame(name=PMX_CONNECTIONS[jname], index=fno)
@@ -201,24 +187,6 @@ def execute(args):
 
                     pchar.update(1)
 
-            # logger.info(
-            #     "【No.{pname}】モーション(回転チェック)開始",
-            #     pname=pname,
-            #     decoration=MLogger.DECORATION_LINE,
-            # )
-
-            # for target_bone_name, vmd_params in tqdm(VMD_CONNECTIONS.items()):
-            #     fnos = []
-            #     rot_values = []
-            #     threshold = vmd_params["threshold"]
-            #     for bf in trace_org_motion.bones[target_bone_name]:
-            #         fnos.append(bf.index)
-            #         rot_values.append(MQuaternion().dot(bf.rotation))
-            #     rot_diffs = np.abs(np.diff(rot_values))
-            #     remove_fnos = np.array(fnos)[np.where((rot_diffs > threshold) & (rot_diffs < 1))[0] + 1]
-            #     for fno in remove_fnos:
-            #         del trace_org_motion.bones[target_bone_name][fno]
-
             logger.info(
                 "【No.{pname}】モーション(センター)計算開始",
                 pname=pname,
@@ -229,7 +197,8 @@ def execute(args):
                 fno = lower_bf.index
 
                 center_abs_pos: MVector3D = lower_bf.position
-                center_relative_pos: MVector3D = center_abs_pos - trace_model.bones["下半身"].position + MVector3D(0, -0.5, 0)
+                # 128 x MIKU_CM
+                center_relative_pos: MVector3D = center_abs_pos - MVector3D(0, 16.5, 0)
 
                 center_pos: MVector3D = center_relative_pos.copy()
                 center_pos.y = 0
@@ -413,7 +382,7 @@ def execute(args):
                                 trace_org_motion.bones[leg_ik_bone_name][fno].position = start_pos
                         pchar.update(efno - sfno)
 
-            trace_org_motion_path = os.path.join(output_dir_path, f"trace_no{pname}_original.vmd")
+            trace_org_motion_path = os.path.join(personal_output_dir, f"trace_no{pname}_original.vmd")
             logger.info(
                 "【No.{pname}】モーション(回転)生成開始【{path}】",
                 pname=pname,
@@ -501,7 +470,7 @@ def execute(args):
                         trace_thining_motion.bones.append(end_bf)
                         pchar.update(efno - sfno)
 
-            trace_thining_motion_path = os.path.join(output_dir_path, f"trace_no{pname}_thining.vmd")
+            trace_thining_motion_path = os.path.join(personal_output_dir, f"trace_no{pname}_thining.vmd")
             logger.info(
                 "【No.{pname}】モーション(間引き)生成開始【{path}】",
                 pname=pname,
@@ -511,8 +480,8 @@ def execute(args):
             VmdWriter.write(trace_model.name, trace_thining_motion, trace_thining_motion_path)
 
         logger.info(
-            "モーション結果保存完了: {motion_dir_path}",
-            motion_dir_path=output_dir_path,
+            "モーション結果保存完了: {personal_output_dir}",
+            personal_output_dir=personal_output_dir,
             decoration=MLogger.DECORATION_BOX,
         )
 
@@ -547,8 +516,6 @@ PMX_CONNECTIONS = {
     "RElbow": "右ひじ",
     "LWrist": "左手首",
     "RWrist": "右手首",
-    "LMiddle": "左中指１",
-    "RMiddle": "右中指１",
     "LEar": "左耳",
     "REar": "右耳",
 }
@@ -592,7 +559,7 @@ VMD_CONNECTIONS = {
             "上半身2",
         ),
         "invert": {
-            "before": MVector3D(20, 10, 0),
+            "before": MVector3D(20, 0, 0),
             "after": MVector3D(),
         },
         "threshold": 0.2,
@@ -606,18 +573,18 @@ VMD_CONNECTIONS = {
             "首",
         ),
         "invert": {
-            "before": MVector3D(-20, 0, 0),
+            "before": MVector3D(),
             "after": MVector3D(),
         },
         "threshold": 0.2,
     },
     "左肩": {
-        "direction": ("左肩", "左腕"),
+        "direction": ("首", "左肩"),
         "up": ("上半身3", "首"),
         "cancel": ("上半身", "上半身2"),
         "invert": {
-            "before": MVector3D(0, 0, -20),
-            "after": MVector3D(),
+            "before": MVector3D(0, 0, -70),
+            "after": MVector3D(0, 20, 0),
         },
         "threshold": 0.2,
     },
@@ -650,32 +617,16 @@ VMD_CONNECTIONS = {
         },
         "threshold": 0.4,
     },
-    "左手首": {
-        "direction": ("左手首", "左中指１"),
-        "up": ("上半身3", "首"),
-        "cancel": (
-            "上半身",
-            "上半身2",
-            "左肩",
-            "左腕",
-            "左ひじ",
-        ),
-        "invert": {
-            "before": MVector3D(),
-            "after": MVector3D(),
-        },
-        "threshold": 0.5,
-    },
     "右肩": {
-        "direction": ("右肩", "右腕"),
+        "direction": ("首", "右肩"),
         "up": ("上半身3", "首"),
         "cancel": (
             "上半身",
             "上半身2",
         ),
         "invert": {
-            "before": MVector3D(0, 0, 20),
-            "after": MVector3D(),
+            "before": MVector3D(0, 0, 70),
+            "after": MVector3D(0, 20, 0),
         },
         "threshold": 0.2,
     },
@@ -707,22 +658,6 @@ VMD_CONNECTIONS = {
             "after": MVector3D(),
         },
         "threshold": 0.4,
-    },
-    "右手首": {
-        "direction": ("右手首", "右中指１"),
-        "up": ("上半身3", "首"),
-        "cancel": (
-            "上半身",
-            "上半身2",
-            "右肩",
-            "右腕",
-            "右ひじ",
-        ),
-        "invert": {
-            "before": MVector3D(),
-            "after": MVector3D(),
-        },
-        "threshold": 0.5,
     },
     "左足": {
         "direction": ("左足", "左ひざ"),
