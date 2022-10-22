@@ -584,7 +584,7 @@ VMD_CONNECTIONS = {
         "cancel": ("上半身", "上半身2"),
         "invert": {
             "before": MVector3D(0, 0, -70),
-            "after": MVector3D(0, 20, 0),
+            "after": MVector3D(),
         },
         "threshold": 0.2,
     },
@@ -626,7 +626,7 @@ VMD_CONNECTIONS = {
         ),
         "invert": {
             "before": MVector3D(0, 0, 70),
-            "after": MVector3D(0, 20, 0),
+            "after": MVector3D(),
         },
         "threshold": 0.2,
     },
