@@ -35,7 +35,7 @@ Thank you for using Text2Motion.
 ■  How to modify generated motion
 ----------------------------------------------------------------
 
-  https://github.com/miu200521358/mmd-auto-trace-3/wiki/04.-%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B9%E3%83%A2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E6%94%B9%E4%BF%AE%E6%96%B9%E6%B3%95
+  https://github.com/miu200521358/mmd-text-to-motion/wiki/04_en.-How-to-modify-generated-motion
 
 
 ----------------------------------------------------------------
