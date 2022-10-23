@@ -58,7 +58,7 @@ msgid "Text2Motion終了\n　テキスト: {text}\n　処理内容: {process}\n�
 msgstr "Text2Motion ended\n Text: {text}\n Process content: {process}\n Generated result: {output_dir}\n Processing time: {elapsed_time}"
 
 msgid "推定結果合成 処理開始: {output_dir}"
-msgstr "Estimated result synthesis process started: {output_dir}"
+msgstr "Estimated result synthesis processing started: {output_dir}"
 
 msgid "【No.{pname}】推定結果合成 合成開始"
 msgstr "[No.{pname}] Estimation Result Synthesis Synthesis Start"

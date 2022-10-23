@@ -414,28 +414,32 @@ def execute(args):
                     mz_values = []
                     rot_values = []
                     rot_y_values = []
-                    for fno in range(start_fno, end_fno):
+                    for fidx, fno in enumerate(range(start_fno, end_fno)):
                         pos = trace_org_motion.bones[bone_name][fno].position
                         mx_values.append(pos.x)
                         my_values.append(pos.y)
                         mz_values.append(pos.z)
                         rot = trace_org_motion.bones[bone_name][fno].rotation
+                        if fidx == 0:
+                            rot_values.append(1)
+                        else:
+                            prev_rot = trace_org_motion.bones[bone_name][fno - 1].rotation
+                            rot_values.append(prev_rot.dot(rot))
                         # オイラー角にした時の長さ
-                        rot_values.append(MQuaternion().dot(rot))
                         degrees = rot.to_euler_degrees()
                         rot_y_values.append(degrees.y if degrees.y >= 0 else degrees.y + 360)
                         pchar.update(1)
 
-                    mx_infections = get_infections(mx_values, threshold=0.1, decimals=1, delimiter=1)
-                    my_infections = get_infections(my_values, threshold=0.1, decimals=1, delimiter=1)
-                    mz_infections = get_infections(mz_values, threshold=0.1, decimals=1, delimiter=1)
+                    mx_infections = get_infections(mx_values, threshold=0.05, decimals=1)
+                    my_infections = get_infections(my_values, threshold=0.05, decimals=1)
+                    mz_infections = get_infections(mz_values, threshold=0.05, decimals=1)
 
                     if "足ＩＫ" in bone_name:
                         # 足IKは若干検出を鈍く
-                        rot_infections = get_infections(rot_values, threshold=0.02, decimals=2)
+                        rot_infections = get_infections(rot_values, threshold=0.1, decimals=2)
                         rot_y_infections = np.array([])
                     else:
-                        rot_infections = get_infections(rot_values, threshold=0.001, decimals=3)
+                        rot_infections = get_infections(rot_values, threshold=0.0007, decimals=4)
                         # 回転変動も検出する(180度だけだとどっち向きの回転か分からないので)
                         rot_y_infections = np.array([])
                         if bone_name in ["上半身", "下半身"]:
