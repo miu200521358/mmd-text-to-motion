@@ -4,7 +4,7 @@ from datetime import datetime
 from glob import glob
 
 import numpy as np
-from base.bezier import create_interpolation, get_infections, get_y_infections
+from base.bezier import create_interpolation, get_fix_infections, get_infections, get_threshold_infections
 from base.exception import MApplicationException
 from base.logger import MLogger
 from base.math import MMatrix4x4, MQuaternion, MVector3D
@@ -430,20 +430,23 @@ def execute(args):
                         rot_y_values.append(degrees.y if degrees.y >= 0 else degrees.y + 360)
                         pchar.update(1)
 
-                    mx_infections = get_infections(mx_values, threshold=0.05, decimals=1)
-                    my_infections = get_infections(my_values, threshold=0.05, decimals=1)
-                    mz_infections = get_infections(mz_values, threshold=0.05, decimals=1)
+                    mx_infections = get_infections(mx_values, threshold=0.05)
+                    my_infections = get_infections(my_values, threshold=0.05)
+                    mz_infections = get_infections(mz_values, threshold=0.05)
+                    mx_fix_infections = get_fix_infections(mx_values)
+                    my_fix_infections = get_fix_infections(my_values)
+                    mz_fix_infections = get_fix_infections(mz_values)
 
                     if "足ＩＫ" in bone_name:
-                        # 足IKは若干検出を鈍く
-                        rot_infections = get_infections(rot_values, threshold=0.1, decimals=2)
+                        # 足IKの回転は代わりにIK固定用のキーを取得する
+                        rot_infections = np.array([])
                         rot_y_infections = np.array([])
                     else:
-                        rot_infections = get_infections(rot_values, threshold=0.0007, decimals=4)
+                        rot_infections = get_infections(rot_values, threshold=0.001)
                         # 回転変動も検出する(180度だけだとどっち向きの回転か分からないので)
                         rot_y_infections = np.array([])
                         if bone_name in ["上半身", "下半身"]:
-                            rot_y_infections = get_y_infections(rot_y_values, 80)
+                            rot_y_infections = get_threshold_infections(rot_y_values, threshold=120)
 
                     infections = list(
                         sorted(
@@ -452,6 +455,9 @@ def execute(args):
                                 | set(mx_infections)
                                 | set(my_infections)
                                 | set(mz_infections)
+                                | set(mx_fix_infections)
+                                | set(my_fix_infections)
+                                | set(mz_fix_infections)
                                 | set(rot_infections)
                                 | set(rot_y_infections)
                             )
