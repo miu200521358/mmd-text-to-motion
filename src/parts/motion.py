@@ -363,11 +363,11 @@ def execute(args):
                         leg_ik_ys.append(leg_ik_bf.position.y)
                         leg_ik_zs.append(leg_ik_bf.position.z)
 
-                    x_infections = get_infections(leg_ik_xs, threshold=0.3, decimals=1)
-                    y_infections = get_infections(leg_ik_ys, threshold=0.4, decimals=1)
-                    z_infections = get_infections(leg_ik_zs, threshold=0.5, decimals=1)
+                    ikx_infections = get_infections(leg_ik_xs, threshold=0.5)
+                    iky_infections = get_infections(leg_ik_ys, threshold=0.5)
+                    ikz_infections = get_infections(leg_ik_zs, threshold=0.6)
 
-                    infections = list(sorted(list({0, len(leg_ik_xs) - 1} | set(x_infections) | set(y_infections) | set(z_infections))))
+                    infections = list(sorted(list({0, len(leg_ik_xs) - 1} | set(ikx_infections) | set(iky_infections) | set(ikz_infections))))
 
                     for sfidx, efidx in zip(infections[:-1], infections[1:]):
                         sfno = int(sfidx + start_fno)
@@ -376,7 +376,7 @@ def execute(args):
                         start_pos = trace_org_motion.bones[leg_ik_bone_name][sfno].position
                         end_pos = trace_org_motion.bones[leg_ik_bone_name][efno].position
 
-                        if np.isclose(start_pos.vector, end_pos.vector, atol=[0.3, 0.4, 0.6]).all():
+                        if np.isclose(start_pos.vector, end_pos.vector, atol=[0.5, 0.5, 0.6]).all():
                             # 開始と終了が大体同じ場合、固定する
                             for fno in range(sfno, efno + 1):
                                 trace_org_motion.bones[leg_ik_bone_name][fno].position = start_pos
