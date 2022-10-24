@@ -65,8 +65,8 @@ def execute(args):
             f.write(translate(args.text, args.lang))
             f.write("\n\n")
 
-        seed = argv.seed if argv.seed > 0 else random.randint(1, 1024)
-        fixseed(seed)
+        argv.seed = args.seed if args.seed > 0 else random.randint(1, 1024)
+        fixseed(argv.seed)
 
         max_frames = 196
         fps = 30
@@ -172,7 +172,7 @@ def execute(args):
                 decoration=MLogger.DECORATION_LINE,
             )
 
-            plot_3d_motion(os.path.join(personal_output_dir, f"{pname}.mp4"), skeleton, motion, title=argv.text_prompt, fps=fps)
+            plot_3d_motion(os.path.join(personal_output_dir, f"{pname}.avi"), skeleton, motion, title=argv.text_prompt, fps=fps, seed=argv.seed)
 
             logger.info(
                 "【No.{pname}】motion-diffusion-model 完了",
@@ -192,10 +192,10 @@ def execute(args):
         raise e
 
 
-def plot_3d_motion(save_path, kinematic_tree, joints, title, figsize=(3, 3), fps=120, radius=3):
+def plot_3d_motion(save_path, kinematic_tree, joints, title, figsize=(3, 3), fps=120, radius=3, seed=10):
     matplotlib.use("Agg")
 
-    title = "\n".join(wrap(title, 20))
+    title = "\n".join(wrap(title + f" [{seed}]", 20))
 
     data = joints.copy().reshape(len(joints), -1, 3)
     fig = plt.figure(figsize=figsize)
@@ -231,7 +231,7 @@ def plot_3d_motion(save_path, kinematic_tree, joints, title, figsize=(3, 3), fps
     data[..., 0] -= data[:, 0:1, 0]
     data[..., 2] -= data[:, 0:1, 2]
 
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter_fourcc(*"I420")
     out = cv2.VideoWriter(
         save_path,
         fourcc,

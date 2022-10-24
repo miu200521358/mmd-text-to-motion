@@ -4,7 +4,7 @@ from datetime import datetime
 from glob import glob
 
 import numpy as np
-from base.bezier import create_interpolation, get_infections, get_y_infections
+from base.bezier import create_interpolation, get_fix_infections, get_infections, get_threshold_infections
 from base.exception import MApplicationException
 from base.logger import MLogger
 from base.math import MMatrix4x4, MQuaternion, MVector3D
@@ -363,11 +363,11 @@ def execute(args):
                         leg_ik_ys.append(leg_ik_bf.position.y)
                         leg_ik_zs.append(leg_ik_bf.position.z)
 
-                    x_infections = get_infections(leg_ik_xs, 0.2, 1)
-                    y_infections = get_infections(leg_ik_ys, 0.3, 1)
-                    z_infections = get_infections(leg_ik_zs, 0.5, 1)
+                    ikx_infections = get_infections(leg_ik_xs, threshold=0.5)
+                    iky_infections = get_infections(leg_ik_ys, threshold=0.5)
+                    ikz_infections = get_infections(leg_ik_zs, threshold=0.6)
 
-                    infections = list(sorted(list({0, len(leg_ik_xs) - 1} | set(x_infections) | set(y_infections) | set(z_infections))))
+                    infections = list(sorted(list({0, len(leg_ik_xs) - 1} | set(ikx_infections) | set(iky_infections) | set(ikz_infections))))
 
                     for sfidx, efidx in zip(infections[:-1], infections[1:]):
                         sfno = int(sfidx + start_fno)
@@ -376,7 +376,7 @@ def execute(args):
                         start_pos = trace_org_motion.bones[leg_ik_bone_name][sfno].position
                         end_pos = trace_org_motion.bones[leg_ik_bone_name][efno].position
 
-                        if np.isclose(start_pos.vector, end_pos.vector, atol=[0.3, 0.4, 0.6]).all():
+                        if np.isclose(start_pos.vector, end_pos.vector, atol=[0.5, 0.5, 0.6]).all():
                             # 開始と終了が大体同じ場合、固定する
                             for fno in range(sfno, efno + 1):
                                 trace_org_motion.bones[leg_ik_bone_name][fno].position = start_pos
@@ -392,7 +392,7 @@ def execute(args):
             VmdWriter.write(trace_model.name, trace_org_motion, trace_org_motion_path)
 
             logger.info(
-                "【No.{pname}】モーション 間引き準備",
+                "【No.{pname}】モーション 間引き",
                 pname=pname,
                 decoration=MLogger.DECORATION_LINE,
             )
@@ -414,32 +414,39 @@ def execute(args):
                     mz_values = []
                     rot_values = []
                     rot_y_values = []
-                    for fno in range(start_fno, end_fno):
+                    for fidx, fno in enumerate(range(start_fno, end_fno)):
                         pos = trace_org_motion.bones[bone_name][fno].position
                         mx_values.append(pos.x)
                         my_values.append(pos.y)
                         mz_values.append(pos.z)
                         rot = trace_org_motion.bones[bone_name][fno].rotation
+                        if fidx == 0:
+                            rot_values.append(1)
+                        else:
+                            prev_rot = trace_org_motion.bones[bone_name][fno - 1].rotation
+                            rot_values.append(prev_rot.dot(rot))
                         # オイラー角にした時の長さ
-                        rot_values.append(MQuaternion().dot(rot))
                         degrees = rot.to_euler_degrees()
                         rot_y_values.append(degrees.y if degrees.y >= 0 else degrees.y + 360)
                         pchar.update(1)
 
-                    mx_infections = get_infections(mx_values, 0.1, 1)
-                    my_infections = get_infections(my_values, 0.1, 1)
-                    mz_infections = get_infections(mz_values, 0.1, 1)
+                    mx_infections = get_infections(mx_values, threshold=0.05)
+                    my_infections = get_infections(my_values, threshold=0.05)
+                    mz_infections = get_infections(mz_values, threshold=0.05)
+                    mx_fix_infections = get_fix_infections(mx_values)
+                    my_fix_infections = get_fix_infections(my_values)
+                    mz_fix_infections = get_fix_infections(mz_values)
 
                     if "足ＩＫ" in bone_name:
-                        # 足IKは若干検出を鈍く
-                        rot_infections = get_infections(rot_values, 0.02, 2)
+                        # 足IKの回転は代わりにIK固定用のキーを取得する
+                        rot_infections = np.array([])
                         rot_y_infections = np.array([])
                     else:
-                        rot_infections = get_infections(rot_values, 0.001, 3)
+                        rot_infections = get_infections(rot_values, threshold=0.001)
                         # 回転変動も検出する(180度だけだとどっち向きの回転か分からないので)
                         rot_y_infections = np.array([])
                         if bone_name in ["上半身", "下半身"]:
-                            rot_y_infections = get_y_infections(rot_y_values, 80)
+                            rot_y_infections = get_threshold_infections(rot_y_values, threshold=120)
 
                     infections = list(
                         sorted(
@@ -448,6 +455,9 @@ def execute(args):
                                 | set(mx_infections)
                                 | set(my_infections)
                                 | set(mz_infections)
+                                | set(mx_fix_infections)
+                                | set(my_fix_infections)
+                                | set(mz_fix_infections)
                                 | set(rot_infections)
                                 | set(rot_y_infections)
                             )
@@ -573,7 +583,7 @@ VMD_CONNECTIONS = {
             "首",
         ),
         "invert": {
-            "before": MVector3D(),
+            "before": MVector3D(-30, 0, 0),
             "after": MVector3D(),
         },
         "threshold": 0.2,
@@ -584,7 +594,7 @@ VMD_CONNECTIONS = {
         "cancel": ("上半身", "上半身2"),
         "invert": {
             "before": MVector3D(0, 0, -70),
-            "after": MVector3D(0, 20, 0),
+            "after": MVector3D(),
         },
         "threshold": 0.2,
     },
@@ -626,7 +636,7 @@ VMD_CONNECTIONS = {
         ),
         "invert": {
             "before": MVector3D(0, 0, 70),
-            "after": MVector3D(0, 20, 0),
+            "after": MVector3D(),
         },
         "threshold": 0.2,
     },
