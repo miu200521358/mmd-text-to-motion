@@ -55,14 +55,16 @@ def execute(args):
         argv.output_dir = os.path.join(args.parent_dir, datetime.now().strftime("%Y%m%d_%H%M%S")) if "20" not in args.parent_dir else args.parent_dir
         os.makedirs(argv.output_dir, exist_ok=True)
 
-        argv.text_prompt = translate(args.text, args.lang)
+        # 事前に翻訳された英文を受け取る
+
+        argv.text_prompt = args.translated_text
         argv.motion_length = args.seconds
         argv.num_repetitions = args.num_repetitions
 
         with open(os.path.join(argv.output_dir, "prompt.txt"), "w") as f:
             f.write(args.text)
             f.write("\n\n")
-            f.write(translate(args.text, args.lang))
+            f.write(args.translated_text)
             f.write("\n\n")
 
         argv.seed = args.seed if args.seed > 0 else random.randint(1, 1024)

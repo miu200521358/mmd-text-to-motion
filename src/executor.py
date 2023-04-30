@@ -26,6 +26,7 @@ def show_worked_time(elapsed_time):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str, dest="text", default="", help="text (English or Japanese)")
+    parser.add_argument("--translated_text", type=str, dest="translated_text", default="", help="text (English Only)")
     parser.add_argument("--seconds", type=float, dest="seconds", default=5.0, help="seconds")
     parser.add_argument("--num_repetitions", type=int, dest="num_repetitions", default=3, help="num_repetitions")
     parser.add_argument("--seed", type=int, dest="seed", default=3, help="seed")
