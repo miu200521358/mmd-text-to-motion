@@ -247,7 +247,7 @@ class MLogger:
                     target_level,
                     "(unknown file)",
                     0,
-                    output_msg.encode('utf-8'),
+                    output_msg,
                     None,
                     None,
                     self.module_name,
