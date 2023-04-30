@@ -240,22 +240,24 @@ class MLogger:
             else:
                 output_msg = self.create_simple_message(print_msg, target_level, title)
 
-            # 出力
-            try:
-                log_record = self.logger.makeRecord(
-                    "name",
-                    target_level,
-                    "(unknown file)",
-                    0,
-                    output_msg,
-                    None,
-                    None,
-                    self.module_name,
-                )
-                self.logger.handle(log_record)
-            except:
-                # エラーしてたら無視
-                pass
+            print(output_msg)
+
+            # # 出力
+            # try:
+            #     log_record = self.logger.makeRecord(
+            #         "name",
+            #         target_level,
+            #         "(unknown file)",
+            #         0,
+            #         output_msg,
+            #         None,
+            #         None,
+            #         self.module_name,
+            #     )
+            #     self.logger.handle(log_record)
+            # except:
+            #     # エラーしてたら無視
+            #     pass
 
     def create_box_message(self, msg, level, title=None):
         msg_block = []
