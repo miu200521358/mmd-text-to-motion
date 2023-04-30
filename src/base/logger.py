@@ -259,24 +259,24 @@ class MLogger:
 
     def create_box_message(self, msg, level, title=None):
         msg_block = []
-        msg_block.append("■■■■■■■■■■■■■■■■■")
+        msg_block.append(u"■■■■■■■■■■■■■■■■■")
 
         if level == logging.CRITICAL:
-            msg_block.append("■　**CRITICAL**　")
+            msg_block.append(u"■　**CRITICAL**　")
 
         if level == logging.ERROR:
-            msg_block.append("■　**ERROR**　")
+            msg_block.append(u"■　**ERROR**　")
 
         if level == logging.WARNING:
-            msg_block.append("■　**WARNING**　")
+            msg_block.append(u"■　**WARNING**　")
 
         if level <= logging.INFO and title:
-            msg_block.append("■　**{0}**　".format(title))
+            msg_block.append(u"■　**{0}**　".format(title))
 
         for msg_line in msg.split("\n"):
-            msg_block.append("■　{0}".format(msg_line))
+            msg_block.append(u"■　{0}".format(msg_line))
 
-        msg_block.append("■■■■■■■■■■■■■■■■■")
+        msg_block.append(u"■■■■■■■■■■■■■■■■■")
 
         return "\n".join(msg_block)
 
@@ -284,7 +284,7 @@ class MLogger:
         msg_block = []
 
         for msg_line in msg.split("\n"):
-            msg_block.append("-- {0} --------------------".format(msg_line))
+            msg_block.append(u"-- {0} --------------------".format(msg_line))
 
         return "\n".join(msg_block)
 
@@ -292,7 +292,7 @@ class MLogger:
         msg_block = []
 
         for msg_line in msg.split("\n"):
-            msg_block.append("■　{0}".format(msg_line))
+            msg_block.append(u"■　{0}".format(msg_line))
 
         return "\n".join(msg_block)
 
